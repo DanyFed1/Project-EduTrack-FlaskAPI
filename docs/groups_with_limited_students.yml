@@ -1,0 +1,31 @@
+get:
+  tags:
+    - Group Information
+  summary: "Find all groups with a limited number of students"
+  description: "Retrieves all groups having a number of students less than or equal to the specified count."
+  parameters:
+    - in: path
+      name: max_student_count
+      schema:
+        type: integer
+        example: 25
+      required: true
+      description: "The maximum number of students in a group"
+  responses:
+    200:
+      description: "Successful retrieval of groups"
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                name:
+                  type: string
+                  example: "AB-12"
+    404:
+      description: "No groups found"
