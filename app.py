@@ -17,23 +17,33 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
 # Register resources
-api.add_resource(GroupsWithLimitedStudents, '/groups/<int:max_student_count>')
-api.add_resource(StudentsByCourseName, '/students/course/<string:course_name>')
+# api.add_resource(GroupsWithLimitedStudents, '/groups/<int:max_student_count>')
+# api.add_resource(StudentsByCourseName, '/students/course/<string:course_name>')
 
 # The below are tested in Insomnia/Postman
-api.add_resource(AddStudent, '/student/add', methods=['POST'])
+# api.add_resource(AddStudent, '/students/', methods=['POST', 'DELETE'])
+# api.add_resource(
+#     DeleteStudent,
+#     '/students/delete/<int:student_id>',
+#     methods=['DELETE'])
+# api.add_resource(
+#     AssignStudentToCourse,
+#     '/student/assign_course',
+#     methods=['POST'])
+# api.add_resource(
+#     RemoveStudentFromCourse,
+#     '/student/remove_course/<int:student_id>/<int:course_id>',
+#     methods=['DELETE'])
+
+# More Restful Approach:
+api.add_resource(GroupsResource, '/groups', '/groups/<int:group_id>', methods=['GET'])
+api.add_resource(StudentResource, '/students', '/students/<int:student_id>')  # Handles adding and deleting students
+api.add_resource(CourseResource, '/courses', '/courses/<int:course_id>')  # Existing courses resource
+api.add_resource(CourseStudentsResource, '/courses/<string:course_name>/students')  # New resource for students by course name
 api.add_resource(
-    DeleteStudent,
-    '/student/delete/<int:student_id>',
-    methods=['DELETE'])
-api.add_resource(
-    AssignStudentToCourse,
-    '/student/assign_course',
-    methods=['POST'])
-api.add_resource(
-    RemoveStudentFromCourse,
-    '/student/remove_course/<int:student_id>/<int:course_id>',
-    methods=['DELETE'])
+    StudentCoursesResource,
+    '/students/<int:student_id>/courses',
+    '/students/<int:student_id>/courses/<int:course_id>')  # Adjusted for adding/removing courses
 
 
 if __name__ == '__main__':

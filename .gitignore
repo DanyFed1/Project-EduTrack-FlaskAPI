@@ -20,3 +20,5 @@ __pycache__/
 /db_check.py
 .db_check.py
 .notes_on_app_creation.txt
+/notes_on_app_creation.txt
+notes_on_app_creation.txt
