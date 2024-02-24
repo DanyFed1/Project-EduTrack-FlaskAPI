@@ -1,16 +1,15 @@
 get:
   tags:
-    - Student Information
-  summary: "Find all students related to a specific course by name"
-  description: "Retrieves a list of students enrolled in a course specified by its name."
+    - Course Students Operations
+  summary: "Find all students related to a specific course by ID"
+  description: "Retrieves a list of students enrolled in a course specified by its ID."
   parameters:
     - in: path
-      name: course_name
+      name: course_id
       schema:
-        type: string
-        example: "Math"
+        type: integer
       required: true
-      description: "The name of the course"
+      description: "The ID of the course"
   responses:
     200:
       description: "Successful retrieval of students"

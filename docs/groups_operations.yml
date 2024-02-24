@@ -1,0 +1,42 @@
+get:
+  tags:
+    - Group Operations
+  summary: "Retrieve all groups or a specific group by ID"
+  description: >
+    Retrieves a list of all groups or details of a specific group by its ID. 
+    Optionally, groups can be filtered to include only those with a number of students less than or equal to the specified count.
+  parameters:
+    - in: path
+      name: group_id
+      schema:
+        type: integer
+      required: false
+      description: "The ID of the group to retrieve"
+    - in: query
+      name: max_student_count
+      schema:
+        type: integer
+      required: false
+      description: "Maximum number of students in a group for filtering"
+  responses:
+    200:
+      description: "Successful retrieval of groups"
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                name:
+                  type: string
+                  example: "Math 101"
+                student_count:
+                  type: integer
+                  example: 25
+                  description: "Present only if max_student_count is specified"
+    404:
+      description: "Group not found"

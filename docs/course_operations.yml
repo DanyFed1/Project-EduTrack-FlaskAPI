@@ -1,0 +1,33 @@
+get:
+  tags:
+    - Course Operations
+  summary: "Retrieve all courses or a specific course by ID"
+  description: "Retrieves a list of all courses or details of a specific course by its ID."
+  parameters:
+    - in: path
+      name: course_id
+      schema:
+        type: integer
+      required: false
+      description: "The ID of the course to retrieve"
+  responses:
+    200:
+      description: "Successful retrieval of courses"
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                name:
+                  type: string
+                  example: "Mathematics"
+                description:
+                  type: string
+                  example: "Introduction to Algebra"
+    404:
+      description: "Course not found"

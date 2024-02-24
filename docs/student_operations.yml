@@ -1,0 +1,96 @@
+get:
+  tags:
+    - Student Operations
+  summary: "Retrieve all students or a specific student by ID"
+  description: "Retrieves a list of all students or details of a specific student by their ID."
+  parameters:
+    - in: path
+      name: student_id
+      schema:
+        type: integer
+      required: false
+      description: "The ID of the student to retrieve"
+  responses:
+    200:
+      description: "Successful retrieval of students"
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 101
+                first_name:
+                  type: string
+                  example: "John"
+                last_name:
+                  type: string
+                  example: "Doe"
+    404:
+      description: "Student not found"
+
+post:
+  tags:
+    - Student Operations
+  summary: "Add a new student"
+  description: "Creates a new student with the provided first name, last name, and optionally assigns them to a group."
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            first_name:
+              type: string
+              example: "John"
+            last_name:
+              type: string
+              example: "Doe"
+            group_id:
+              type: integer
+              example: 1
+              description: "Optional group ID to assign the student to a group"
+  responses:
+    201:
+      description: "Student created successfully"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Student added successfully"
+              student_id:
+                type: integer
+                example: 102
+
+delete:
+  tags:
+    - Student Operations
+  summary: "Delete a specific student by ID"
+  description: "Deletes a student identified by their ID."
+  parameters:
+    - in: path
+      name: student_id
+      schema:
+        type: integer
+      required: true
+      description: "The ID of the student to delete"
+  responses:
+    200:
+      description: "Student deleted successfully"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Student deleted successfully"
+    404:
+      description: "Student not found"

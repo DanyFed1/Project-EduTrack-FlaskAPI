@@ -1,0 +1,70 @@
+post:
+  tags:
+    - Student Courses Operations
+  summary: "Assign courses to a student"
+  description: "Assigns one or more courses to a student by their ID."
+  parameters:
+    - in: path
+      name: student_id
+      schema:
+        type: integer
+        required: true
+        description: "The ID of the student"
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            course_id:
+              type: array
+              items:
+                type: integer
+              description: "Array of course IDs to assign to the student"
+              example: [1, 2, 3]
+  responses:
+    200:
+      description: "Courses assigned to student successfully"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Students assigned to course successfully"
+    404:
+      description: "Student or course not found"
+
+delete:
+  tags:
+    - Student Courses Operations
+  summary: "Remove a student from a course"
+  description: "Removes a student from a specific course by their respective IDs."
+  parameters:
+    - in: path
+      name: student_id
+      schema:
+        type: integer
+        required: true
+        description: "The ID of the student"
+    - in: path
+      name: course_id
+      schema:
+        type: integer
+        required: true
+        description: "The ID of the course to remove the student from"
+  responses:
+    200:
+      description: "Student removed from course successfully"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Student removed from course successfully"
+    404:
+      description: "Student or course not found"
