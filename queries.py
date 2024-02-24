@@ -67,24 +67,23 @@ def remove_student_from_all_courses(student_id):
     db.session.commit()
 
 
-def find_students_by_course_name(course_name):
-    """Find all students related to a course by its name."""
-    return Student.query \
-        .join(StudentCourses) \
-        .join(Course) \
-        .filter(Course.name.ilike(course_name)) \
-        .all()
+def find_students_by_course_id(course_id):
+    """Find all students related to a course by its course_id."""
+    students = Student.query.join(
+        StudentCourses,
+        StudentCourses.student_id == Student.id).join(
+        Course,
+        Course.id == StudentCourses.course_id).filter(
+            Course.id == course_id).all()
+    return students
 
 
 def find_groups_with_max_or_less_students(max_student_count):
-    groups = db.session.query(
-        Group.id,
-        Group.name,
-        db.func.count(Student.id).label('student_count')
-    ).join(Student, isouter=True).group_by(Group.id).having(
-        db.func.count(Student.id) <= max_student_count
-    ).all()
-    return [
-        {'id': group.id, 'name': group.name, 'student_count': group.student_count}
-        for group in groups
-    ]
+    groups = Group.query.join(
+        Student,
+        Group.id == Student.group_id,
+        isouter=True).group_by(
+        Group.id).having(
+        db.func.count(
+            Student.id) <= max_student_count).all()
+    return groups
