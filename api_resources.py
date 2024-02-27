@@ -2,6 +2,8 @@ from flask_restful import Resource, reqparse
 from flask import request
 from flasgger import swag_from
 from queries import *
+from flask import jsonify
+
 
 
 class GroupsResource(Resource):
@@ -13,6 +15,8 @@ class GroupsResource(Resource):
         # If a group_id is provided, find and return the specific gorup
         if group_id:
             group = find_group_by_id(group_id)
+            if not group:
+                return {'message': 'group_id not found'}, 404
             return [{'id': group.id, 'name': group.name}]
 
         # if ?max_student_count= provided
@@ -31,6 +35,8 @@ class StudentResource(Resource):
     def get(self, student_id=None):
         if student_id:
             student = find_student_by_id(student_id)
+            if not student:
+                return {'message': 'student_id not found'}, 404
             return [{'id': student.id,
                      'name': student.first_name,
                      'surname': student.last_name}]
@@ -57,11 +63,13 @@ class StudentResource(Resource):
             args.get('group_id'))
         return {
             'message': 'Student added successfully',
-            'student_id': student_id}
+            'student_id': student_id}, 201
+
+
 
     def delete(self, student_id):
         delete_student_by_id(student_id)
-        return {'message': 'Student deleted successfully'}
+        return {'message': 'Student deleted successfully'}, 202
 
 
 class CourseResource(Resource):
@@ -69,6 +77,8 @@ class CourseResource(Resource):
     def get(self, course_id=None):
         if course_id:
             course = find_course_by_id(course_id)
+            if not course:
+                return {'message': 'course_id not found'}, 404
             return [{'id': course.id, 'name': course.name,
                      'description': course.description}]
         else:
@@ -97,9 +107,9 @@ class StudentCoursesResource(Resource):
             help="Course ID(s) cannot be blank!")
         args = parser.parse_args()
         add_student_to_courses(student_id, args['course_id'])
-        return {'message': 'Students assigned to course successfully'}
+        return {'message': 'Students assigned to course successfully'}, 201
 
     def delete(self, student_id, course_id):
         """Remove a student from one of his or her courses."""
         remove_student_from_course(student_id, course_id)
-        return {'message': 'Student removed from course successfully'}
+        return {'message': 'Student removed from course successfully'}, 202

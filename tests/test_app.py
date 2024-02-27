@@ -15,7 +15,7 @@ def client():
 
 
 class MockModel:
-    """Simple class that mimics SQLAlchemy model to avoid a a discrepancy between
+    """Simple class that mimics SQLAlchemy model to avoid a discrepancy between
     the mocked return values and API resource methods expecting to interact class attributes."""
 
     def __init__(self, **kwargs):
@@ -52,7 +52,7 @@ def test_add_new_student(mock_add_new_student, client):
             'first_name': 'Jane',
             'last_name': 'Doe',
             'group_id': 1})
-    assert response.status_code == 200
+    assert response.status_code == 201
     assert b'Student added successfully' in response.data
 
 
@@ -61,7 +61,7 @@ def test_delete_student_by_id(mock_delete_student_by_id, client):
     mock_delete_student_by_id.return_value = {
         'message': 'Student deleted successfully'}
     response = client.delete('/students/1')
-    assert response.status_code == 200
+    assert response.status_code == 202
     assert b'Student deleted successfully' in response.data
 
 
@@ -100,7 +100,7 @@ def test_get_all_courses(mock_find_all_courses, client):
 def test_add_student_to_courses(mock_add_student_to_courses, client):
     mock_add_student_to_courses.return_value = None
     response = client.post('/students/1/courses', json={'course_id': [1, 2]})
-    assert response.status_code == 200
+    assert response.status_code == 201
     assert b'Students assigned to course successfully' in response.data
 
 
@@ -108,5 +108,5 @@ def test_add_student_to_courses(mock_add_student_to_courses, client):
 def test_remove_student_from_course(mock_remove_student_from_course, client):
     mock_remove_student_from_course.return_value = None
     response = client.delete('/students/1/courses/1')
-    assert response.status_code == 200
+    assert response.status_code == 202
     assert b'Student removed from course successfully' in response.data
