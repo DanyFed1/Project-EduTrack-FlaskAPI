@@ -10,7 +10,7 @@ The project was built to fulfill a comprehensive set of requirements, encompassi
 - **Data Generation**: Automated creation of test data, including groups, courses, and students with many-to-many relationships between students and courses.
 - **ORM Queries**: Implementation of Object-Relational Mapping (ORM) queries to interact with the database, providing functionalities like adding students, finding groups with a certain number of students, and more.
 - **RESTful API**: Development of a RESTful API using Flask and Flask-RESTful to manage educational data, with endpoints for groups, students, and courses.
-- **Documentation and Testing**: Comprehensive testing of the API functionalities using pytest and documentation of API endpoints using Swagger.
+- **Documentation and Testing**: Comprehensive testing of the API functionalities using pytes. Documentation of API endpoints using Swagger.
 
 
 ### Initialize the database:
